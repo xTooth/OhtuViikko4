@@ -83,4 +83,41 @@ public class Testeroos {
 
     }
 
+    @Test
+    public void aloitaAsiointiNollaaOstot() {
+
+        when(v.uusi()).thenReturn(43);
+        when(var.saldo(1)).thenReturn(10);
+        when(var.saldo(2)).thenReturn(20);
+        when(var.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
+        when(var.haeTuote(2)).thenReturn(new Tuote(2, "mehu", 10));
+        Kauppa k = new Kauppa(var, p, v);
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.lisaaKoriin(2);
+        k.tilimaksu("jussi", "54321");
+        verify(p).tilisiirto("jussi", 43, "54321", "33333-44455", 15);
+        when(v.uusi()).thenReturn(43);
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.tilimaksu("spede", "pasanen");
+        verify(p).tilisiirto("spede", 43, "pasanen", "33333-44455", 5);
+
+    }
+
+    @Test
+    public void poistaminenKoristaToimii() {
+        when(v.uusi()).thenReturn(43);
+        when(var.saldo(2)).thenReturn(20);
+        when(var.haeTuote(2)).thenReturn(new Tuote(2, "mehu", 10));
+        Kauppa k = new Kauppa(var, p, v);
+        k.aloitaAsiointi();
+        k.lisaaKoriin(2);   
+        k.poistaKorista(2);
+        k.tilimaksu("spede", "pasanen");
+        verify(p).tilisiirto("spede", 43, "pasanen", "33333-44455", 0);
+       
+
+    }
+
 }
