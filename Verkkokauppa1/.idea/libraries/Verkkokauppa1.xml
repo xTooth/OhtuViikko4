@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Verkkokauppa1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/distributions/Verkkokauppa1.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
